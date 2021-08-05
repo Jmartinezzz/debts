@@ -11,6 +11,11 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.2/dist/alpine.min.js" defer></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -18,6 +23,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    @livewireStyles
 </head>
 <body>
     <div id="app">
@@ -61,7 +67,7 @@
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
+                                        Salir
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -75,9 +81,31 @@
             </div>
         </nav>
 
-        <main class="py-4">
+        <main class="py-4">   
+            <div id="tt" class="toast align-items-center text-white bg-primary border-0" role="alert" aria-live="assertive" aria-atomic="true">
+              <div class="d-flex">
+                <div class="toast-body">
+                  Hello, world! This is a toast message.
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+              </div>
+            </div>           
             @yield('content')
+           
         </main>
     </div>
+     @livewireScripts    
+     <script type="text/javascript">    
+
+        window.livewire.on('debtStore', (data) => {
+            if(data.type == 'save'){
+                $('#modalDebtors').modal('hide');       
+            }else if(data.type == 'update'){
+                $('#modalDebtorsEdit').modal('hide');                       
+            }    
+        });
+
+
+    </script>
 </body>
 </html>

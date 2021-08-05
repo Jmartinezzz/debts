@@ -4,6 +4,7 @@
         <div class="col-md-6">
             <a href="{{ URL::previous() }}" class="btn btn-danger">Atrás</a>
             <button class="btn btn-primary">Agregar nueva</button>
+            <button class="btn btn-primary">Reestablecer a 0</button>
         </div>     
     </section>
     <table class="table table-hover mt-3">
@@ -36,7 +37,7 @@
                 </tr>
             @empty
                 <tr class="text-center">
-                    <td colspan="6s" class="font-weight-bold">No hay registros aún</td>
+                    <td colspan="6" class="font-weight-bold">No hay registros aún</td>
                 </tr>
             @endforelse()
         </tbody>

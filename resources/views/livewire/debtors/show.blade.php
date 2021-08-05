@@ -2,8 +2,29 @@
     <h1 class="font-weight-bold">Deudores</h1>
     <section class="row">
         <div class="col-md-6">
-            <button class="btn btn-primary">Agregar nuevo</button>
+            <button class="btn btn-primary" data-toggle="modal" data-target="#modalDebtors">Agregar nuevo</button>
         </div>
+        <!-- Modal -->
+        <div wire:ignore.self class="modal fade" id="modalDebtors" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Nuevo registro</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                    @include("livewire.debtors.$view")
+              </div>
+              <div class="modal-footer">
+                <button wire:click="resetFields" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button wire:click="store" type="button" class="btn btn-primary">Save changes</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Modal -->
         <div class="col-md-6 ">
             <div class="form-inline">
                 <input class="form-control" type="search">
@@ -19,6 +40,7 @@
                 <th>Nombre</th>
                 <th>Descripción</th>
                 <th>Creado en</th>
+                <th>Deuda</th>
                 <th>Acciones</th>
             </tr>          
         </thead>
@@ -29,16 +51,40 @@
                     <td>{{ $debtor->name }}</td>
                     <td>{{ $debtor->description }}</td>
                     <td>{{ $debtor->created_at->format('d-m-Y'); }}</td>
+                    <td>${{ $debtor->total() }}</td>
                     <td>
                         <a href="{{ route('debts.detail', ['debtor' => $debtor->id]) }}" class="btn btn-sm btn-outline-secondary">ver</a>
-                        <button class="btn btn-sm btn-outline-secondary">edit</button>
-                        <button class="btn btn-sm btn-outline-secondary">delete</button>
+                        <button wire:click="edit({{ $debtor }})"  data-toggle="modal" data-target="#modalDebtorsEdit"  class="btn btn-sm btn-outline-secondary">edit</button>
+                        <button wire:click="delete({{ $debtor }})" class="btn btn-sm btn-outline-secondary">delete</button>
                     </td>
                 </tr>
             @empty
-                <p>No users</p>
+                <tr class="text-center">
+                    <td colspan="6" class="font-weight-bold">No hay registros aún</td>
+                </tr>
             @endforelse()
         </tbody>
+        <!-- Modal -->
+        <div wire:ignore.self class="modal fade" id="modalDebtorsEdit" tabindex="-1" role="dialog" aria-labelledby="modalDebtorsEdit" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                    @include("livewire.debtors.$view")
+              </div>
+              <div class="modal-footer">
+                <button wire:click="resetFields" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button wire:click="update({{ $debtor_id }})" type="button" class="btn btn-primary">Actualizar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Modal -->
         
     </table>
 </div> 
