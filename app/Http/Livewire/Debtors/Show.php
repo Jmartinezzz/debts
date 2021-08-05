@@ -18,7 +18,7 @@ class Show extends Component
     public function render()
     {
         // $this->dispatchBrowserEvent('closeModal');
-        $debtors = Debtor::all();
+        $debtors = Debtor::orderBy('created_at', 'DESC')->get();
         return view('livewire.debtors.show', [
             'debtors' => $debtors
         ]);
@@ -32,7 +32,12 @@ class Show extends Component
             'description' => $this->description
         ]);
         $this->resetFields();
-        $this->emit('debtStore', ['type' => 'save','color' => 'success']);        
+        $this->emit('debtStore', ['type' => 'save']);  
+        $this->alert(
+            'success',
+            'Registro Guardado'
+        );
+          
     }
 
     public function delete(Debtor $debtor){
@@ -54,7 +59,11 @@ class Show extends Component
         ]);
 
         $this->resetFields();        
-        $this->emit('debtStore', ['type' => 'update','color' => 'success']);  
+        $this->emit('debtStore', ['type' => 'update']);  
+        $this->alert(
+            'success',
+            'Registro Actualizado'
+        );
     }
 
     public function resetFields(){
