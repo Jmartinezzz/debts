@@ -18,7 +18,7 @@ class CreateDebtsTable extends Migration
             $table->foreignId('debtor_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('user_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->double('total', 8, 2);
-            $table->string('description', 175);            
+            $table->string('description', 175)->nullable();            
             $table->timestamps();             
 
         });

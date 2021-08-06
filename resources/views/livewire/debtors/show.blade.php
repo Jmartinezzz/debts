@@ -54,8 +54,10 @@
                     <td>${{ $debtor->total() }}</td>
                     <td>
                         <a href="{{ route('debts.detail', ['debtor' => $debtor->id]) }}" class="btn btn-sm btn-outline-secondary">ver</a>
+
                         <button wire:click="edit({{ $debtor }})"  data-toggle="modal" data-target="#modalDebtorsEdit"  class="btn btn-sm btn-outline-secondary">edit</button>
-                        <button wire:click="delete({{ $debtor }})" class="btn btn-sm btn-outline-secondary">delete</button>
+
+                        <button wire:click="wantoDelete({{ $debtor->id }})" class="btn btn-sm btn-outline-secondary">delete</button>
                     </td>
                 </tr>
             @empty
@@ -64,12 +66,12 @@
                 </tr>
             @endforelse()
         </tbody>
-        <!-- Modal -->
+        <!-- Edit Modal -->
         <div wire:ignore.self class="modal fade" id="modalDebtorsEdit" tabindex="-1" role="dialog" aria-labelledby="modalDebtorsEdit" aria-hidden="true">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Edición de deudor</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -84,7 +86,7 @@
             </div>
           </div>
         </div>
-        <!-- Modal -->
+        <!-- Edit Modal -->
         
     </table>
 </div> 

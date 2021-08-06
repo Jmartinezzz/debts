@@ -10,8 +10,13 @@ class Show extends Component
     public $debtor_id, $name, $description;
     public $view  = 'create';
 
+    protected $listeners = [
+        'confirmedToDelete',
+        'cancelled',
+    ];
+
     protected $rules = [
-        'name' => 'required|min:5',
+        'name' => 'required|min:4',
         'description' => 'nullable',
     ];
 
@@ -40,8 +45,17 @@ class Show extends Component
           
     }
 
-    public function delete(Debtor $debtor){
-        $debtor->delete();
+    public function confirmedToDelete(){
+        Debtor::find($this->debtor_id)->delete();
+        $this->alert(
+            'success',
+            "Se elimino a $this->name" 
+        );
+        $this->resetFields();     
+    }
+
+    public function cancelled(){        
+        $this->alert('info', 'No se elimino nada');
     }
 
     public function edit(Debtor $debtor){
@@ -68,5 +82,19 @@ class Show extends Component
 
     public function resetFields(){
         $this->reset(['debtor_id', 'name', 'description']);
+    } 
+
+    public function wantoDelete(Debtor $debtor){
+        $this->debtor_id = $debtor->id;
+        $this->name = $debtor->name;
+        $this->confirm("¿Seguro de eliminar a $debtor->name?", [
+            'toast' => true,
+            'position' => 'center',
+            'showConfirmButton' => true,
+            'confirmButtonText' =>  'Si, borrar',
+            'cancelButtonText' => 'Cancelar',
+            'onConfirmed' => 'confirmedToDelete',
+            'onCancelled' => 'cancelled'
+        ]);
     }
 }
