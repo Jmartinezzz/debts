@@ -2,7 +2,7 @@
     <div class="form-group">
         <label for="">Nombre:</label>
         <input type="text" class="form-control" wire:model.defer="name">
-        @error('name') <span class="text-danger">{{ $message}}</span> @enderror        
+        @error('name') <span class="text-danger small">{{ $message}}</span> @enderror        
     </div>
     <div class="form-group">
         <label for="">Descripción:</label>

@@ -23,6 +23,8 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+
     @livewireStyles
 </head>
 <body>
@@ -81,15 +83,7 @@
             </div>
         </nav>
 
-        <main class="py-4">   
-            <div id="tt" class="toast align-items-center text-white bg-primary border-0" role="alert" aria-live="assertive" aria-atomic="true">
-              <div class="d-flex">
-                <div class="toast-body">
-                  Hello, world! This is a toast message.
-                </div>
-                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-              </div>
-            </div>           
+        <main class="py-4">           
             @yield('content')
            
         </main>
