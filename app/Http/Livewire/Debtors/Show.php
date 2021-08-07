@@ -7,7 +7,7 @@ use Livewire\Component;
 
 class Show extends Component
 {
-    public $debtor_id, $name, $description;
+    public $debtor_id, $name, $description, $search;
     public $view  = 'create';
 
     protected $listeners = [
@@ -23,7 +23,8 @@ class Show extends Component
     public function render()
     {
         // $this->dispatchBrowserEvent('closeModal');
-        $debtors = Debtor::orderBy('created_at', 'DESC')->get();
+        $debtors = Debtor::where('name', 'LIKE', '%'.$this->search.'%')
+            ->orderBy('created_at', 'DESC')->get();
         return view('livewire.debtors.show', [
             'debtors' => $debtors
         ]);
@@ -89,7 +90,7 @@ class Show extends Component
                 'position' =>  'center',  
             ]
         );
-    }
+    }       
 
     public function resetFields(){
         $this->reset(['debtor_id', 'name', 'description']);

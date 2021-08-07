@@ -3,7 +3,7 @@
     <section class="row">
         <div class="col-md-6">
             <a href="{{ route('home') }}" class="btn btn-danger">Atrás</a>
-            <button class="btn btn-primary" data-toggle="modal" data-target="#modalDebts">Agregar nueva</button>
+            <button class="btn btn-primary d-block d-md-inline mt-2 mt-md-0" data-toggle="modal" data-target="#modalDebts">Agregar nueva</button>
             <!-- Modal -->
             <div wire:ignore.self class="modal fade" id="modalDebts" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
               <div class="modal-dialog" role="document">
@@ -26,7 +26,7 @@
             </div>
             <!-- Modal -->
             @if($debts->count() > 0)
-                <button class="btn btn-primary" wire:click="wantoReset">Reestablecer a $0.0</button>
+                <button class="btn btn-primary d-block d-md-inline mt-2 mt-md-0" wire:click="wantoReset">Reestablecer a $0.0</button>
             @endif
         </div>     
     </section>

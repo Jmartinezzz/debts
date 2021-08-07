@@ -27,8 +27,8 @@
         <!-- Modal -->
         <div class="col-12 col-md-6 mt-3 mt-md-0">
             <div class="d-flex justify-content-end">
-                <input placeholder="Ingrese el nombre a buscar" class="form-control" type="search">
-                <button class="btn btn-secondary">Buscar</button>  
+                <input wire:model="search" placeholder="Ingrese el nombre a buscar" class="form-control" type="search">
+                {{-- <button wire:click="$refresh" class="btn btn-secondary">Buscar</button>   --}}
             </div>
         </div>        
     </section>
@@ -61,7 +61,7 @@
                                 <i class="fas fa-edit"></i>
                             </button>
 
-                            <button data-bs-toggle="tooltip" title="Eliminar" wire:click="wantoDelete({{ $debtor->id }})" class="btn btn-sm btn-outline-danger mt-1 mt-lg-0">
+                            <button data-bs-toggle="tooltip" title="Eliminar" wire:click="wantoDelete({{ $debtor->id }})" class="btn btn-sm btn-outline-danger mt-1 mt-md-0">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </td>
