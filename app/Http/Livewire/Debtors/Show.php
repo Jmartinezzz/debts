@@ -40,7 +40,10 @@ class Show extends Component
         $this->emit('debtStore', ['type' => 'save']);  
         $this->alert(
             'success',
-            'Registro Guardado'
+            'Registro Guardado',
+            [
+                'position' =>  'center',  
+            ]
         );
           
     }
@@ -49,13 +52,18 @@ class Show extends Component
         Debtor::find($this->debtor_id)->delete();
         $this->alert(
             'success',
-            "Se elimino a $this->name" 
+            "Se elimino a $this->name",
+             [
+                'position' =>  'center',  
+            ]
         );
         $this->resetFields();     
     }
 
     public function cancelled(){        
-        $this->alert('info', 'No se elimino nada');
+        $this->alert('info', 'No se elimino nada', [
+                'position' =>  'center',  
+            ]);
     }
 
     public function edit(Debtor $debtor){
@@ -76,7 +84,10 @@ class Show extends Component
         $this->emit('debtStore', ['type' => 'update']);  
         $this->alert(
             'success',
-            'Registro Actualizado'
+            'Registro Actualizado',
+             [
+                'position' =>  'center',  
+            ]
         );
     }
 

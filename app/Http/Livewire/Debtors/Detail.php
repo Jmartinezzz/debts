@@ -14,6 +14,7 @@ class Detail extends Component
     protected $listeners = [
         'confirmedToDelete',
         'cancelled',
+        'confirmedToReset'
     ];
 
     protected $rules = [
@@ -39,19 +40,22 @@ class Detail extends Component
         $this->emit('debtsStore', ['type' => 'save']);  
         $this->alert(
             'success',
-            'Registro Guardado'
-        );              
+            'Registro Guardado',
+            [
+              'position' =>  'center',           
+            ]);         
     }
 
     public function confirmedToDelete(){
         Debt::find($this->debt_id)->delete();
         $this->alert(
             'success',
-            "Se elimino el registro con valor de  $this->total" 
-        );
+            "Se elimino el registro con valor de  $this->total",
+            [
+              'position' =>  'center',           
+            ]);  
         $this->resetFields();     
-    }
-
+    }   
 
     public function edit(Debt $debt){
         $this->total = $debt->total;
@@ -71,14 +75,30 @@ class Detail extends Component
         $this->emit('debtsStore', ['type' => 'update']);  
         $this->alert(
             'success',
-            'Registro Actualizado'
-        );
+            'Registro Actualizado',
+            [
+              'position' =>  'center',           
+            ]); 
+    }
 
+    public function confirmedToReset(){
+        $name = $this->debtor->name;
+        $ids = Debt::where('debtor_id', $this->debtor->id)->pluck('id');
+        Debt::destroy($ids);
+        $this->alert(
+            'success',
+            "Se reestablecio la deuda de $name a $0.0",
+            [
+              'position' =>  'center',           
+            ]);        
+        $this->resetFields();     
     }
 
     public function cancelled(){  
         $this->resetFields();        
-        $this->alert('info', 'No se elimino nada');
+        $this->alert('info', 'No se elimino nada',[
+          'position' =>  'center',           
+        ]);
     }
 
     public function resetFields(){
@@ -95,6 +115,19 @@ class Detail extends Component
             'confirmButtonText' =>  'Si, borrar',
             'cancelButtonText' => 'Cancelar',
             'onConfirmed' => 'confirmedToDelete',
+            'onCancelled' => 'cancelled'
+        ]);
+    }
+
+    public function wantoReset(){  
+        $name =$this->debtor->name;     
+        $this->confirm("¿Seguro de restablecer la deuda de $name a $0.0?", [
+            'toast' => true,
+            'position' => 'center',
+            'showConfirmButton' => true,
+            'confirmButtonText' =>  'Si, reestablercer',
+            'cancelButtonText' => 'Cancelar',
+            'onConfirmed' => 'confirmedToReset',
             'onCancelled' => 'cancelled'
         ]);
     }

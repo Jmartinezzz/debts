@@ -16,7 +16,7 @@ class CreateDebtorsTable extends Migration
         Schema::create('debtors', function (Blueprint $table) {
             $table->id();
             $table->string('name', 75);
-            $table->string('description', 175);
+            $table->string('description', 175)->nullable();
             $table->timestamps(); 
         });
     }

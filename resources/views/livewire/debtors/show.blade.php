@@ -53,15 +53,15 @@
                         <td>{{ $debtor->created_at->format('d-m-Y'); }}</td>
                         <td>${{ $debtor->total() }}</td>
                         <td>
-                            <a href="{{ route('debts.detail', ['debtor' => $debtor->id]) }}" class="btn btn-sm btn-outline-secondary">
+                            <a data-bs-toggle="tooltip" title="Ver" href="{{ route('debts.detail', ['debtor' => $debtor->id]) }}" class="btn btn-sm btn-outline-secondary">
                                 <i class="fas fa-eye"></i>
                             </a>
 
-                            <button wire:click="edit({{ $debtor }})"  data-toggle="modal" data-target="#modalDebtorsEdit"  class="btn btn-sm btn-outline-success mt-1 mt-md-0">
+                            <button data-bs-toggle="tooltip" title="Editar" wire:click="edit({{ $debtor }})"  data-toggle="modal" data-target="#modalDebtorsEdit"  class="btn btn-sm btn-outline-success mt-1 mt-md-0">
                                 <i class="fas fa-edit"></i>
                             </button>
 
-                            <button wire:click="wantoDelete({{ $debtor->id }})" class="btn btn-sm btn-outline-danger mt-1 mt-lg-0">
+                            <button data-bs-toggle="tooltip" title="Eliminar" wire:click="wantoDelete({{ $debtor->id }})" class="btn btn-sm btn-outline-danger mt-1 mt-lg-0">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </td>
