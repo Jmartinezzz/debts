@@ -10,16 +10,15 @@
                 <div class="modal-content">
                   <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Nuevo registro de deuda</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
                     </button>
                   </div>
                   <div class="modal-body">
                         @include("livewire.debtors.debtsForm")
                   </div>
                   <div class="modal-footer">
-                    <button wire:click="resetFields" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button wire:click="save" type="button" class="btn btn-primary">Save changes</button>
+                    <button wire:click="resetFields" type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button wire:click="save" type="button" class="btn btn-primary">Guardar</button>
                   </div>
                 </div>
               </div>

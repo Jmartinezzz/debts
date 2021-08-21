@@ -10,16 +10,15 @@
             <div class="modal-content">
               <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Nuevo registro</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
                 </button>
               </div>
               <div class="modal-body">
                     @include("livewire.debtors.$view")
               </div>
               <div class="modal-footer">
-                <button wire:click="resetFields" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button wire:click="store" type="button" class="btn btn-primary">Save changes</button>
+                <button wire:click="resetFields" type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button wire:click="store" type="button" class="btn btn-primary">Guardar</button>
               </div>
             </div>
           </div>
@@ -45,8 +44,8 @@
                 </tr>          
             </thead>
             <tbody>
-                @forelse($debtors as $debtor)
-                    <tr>
+                @forelse($debtors as $debtor)                
+                    <tr class="clickable-row" data-href="{{ route('debts.detail', ['debtor' => $debtor->id]) }}">                        
                         <td>{{ $loop->index + 1 }}</td>
                         <td>{{ $debtor->name }}</td>
                         <td>{{ $debtor->description }}</td>
@@ -65,7 +64,8 @@
                                 <i class="fas fa-trash"></i>
                             </button>
                         </td>
-                    </tr>
+                       
+                    </tr>                     
                 @empty
                     <tr class="text-center">
                         <td colspan="6" class="font-weight-bold">No hay registros aún</td>
@@ -96,3 +96,10 @@
         </table>
     </div>
 </div> 
+<script>
+    $(function(){
+        $(".clickable-row").click(function() {
+            window.location = $(this).data("href");
+        });
+    });
+</script>
