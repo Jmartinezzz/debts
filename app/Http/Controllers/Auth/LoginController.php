@@ -41,4 +41,9 @@ class LoginController extends Controller
     protected function loggedOut() {
         return redirect('/login');
     }
+
+    public function username()
+    {
+        return 'name';
+    }
 }

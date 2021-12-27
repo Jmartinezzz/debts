@@ -1,4 +1,4 @@
-<div>
+<div x-data="{ isMobile: false }" @resize.window="isMobile = window.innerWidth < 769">
     <h1 class="font-weight-bold">Deudores</h1>
     <section class="row">
         <div class="col-md-6">
@@ -31,7 +31,7 @@
             </div>
         </div>        
     </section>
-    <div class="table-responsive">        
+    <div class="table-responsive" x-show="!isMobile">        
         <table class="table table-hover mt-3">
             <thead>
                 <tr>
@@ -45,7 +45,7 @@
             </thead>
             <tbody>
                 @forelse($debtors as $debtor)                
-                    <tr class="clickable-row" data-href="{{ route('debts.detail', ['debtor' => $debtor->id]) }}">                        
+                    <tr>                        
                         <td>{{ $loop->index + 1 }}</td>
                         <td>{{ $debtor->name }}</td>
                         <td>{{ $debtor->description }}</td>
@@ -95,10 +95,38 @@
             <!-- Edit Modal -->        
         </table>
     </div>
+    <section x-show="isMobile">
+        <div class="row">
+            @forelse($debtors as $debtor)    
+                <div class="col-12 mt-4">
+                    <a href="{{ route('debts.detail', ['debtor' => $debtor->id]) }}" style="text-decoration-line: none;">
+                    <div class="card shadow rounded">
+                        <div class="card-header bg-primary text-white rounded-top">
+                            <h5 class="card-title text-capitalize">{{ $debtor->name }}</h5>
+                        </div>
+                      <div class="card-body">                        
+                        <h6 class="card-subtitle mb-2 text-muted">{{ $debtor->description }}</h6>
+                        <p class="card-text">Total: {{ $debtor->total() }}</p>
+                        <section class="d-flex justify-content-end">                            
+                            <p class="text-secondary">Fecha de creación: {{ $debtor->created_at->format('d-m-Y') }}</p>
+                        </section>
+                      </div>
+                    </div>  
+                </a>
+                </div>          
+                               
+            @empty
+                <tr class="text-center">
+                    <td colspan="6" class="font-weight-bold">No hay registros aún</td>
+                </tr>
+            @endforelse()
+            
+        </div>  
+    </section>
 </div> 
 <script>
     $(function(){
-        $(".clickable-row").click(function() {
+        $(".clickable-card").click(function() {
             window.location = $(this).data("href");
         });
     });
