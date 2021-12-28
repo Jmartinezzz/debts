@@ -73,6 +73,9 @@
                                                      document.getElementById('logout-form').submit();">
                                         Salir
                                     </a>
+                                    <a class="dropdown-item" href="{{ route('logout') }}">
+                                        Configuración
+                                    </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf
