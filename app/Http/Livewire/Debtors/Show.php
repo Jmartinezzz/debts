@@ -12,7 +12,7 @@ class Show extends Component
 
     protected $listeners = [
         'confirmedToDelete',
-        'cancelled',
+        'cancelled'
     ];
 
     protected $rules = [
@@ -72,7 +72,8 @@ class Show extends Component
         $this->description = $debtor->description;
         $this->debtor_id = $debtor->id;
         
-    }
+    }  
+
 
     public function update(Debtor $debtor){
         $this->validate();

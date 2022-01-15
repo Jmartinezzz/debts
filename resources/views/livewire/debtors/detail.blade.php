@@ -87,8 +87,8 @@
                 $totalDebt += $debt->total;
             @endphp  
             <div class="col-12 mt-4">               
-                <div class="card">
-                    <div class="card-header">
+                <div class="card border-primary rounded">
+                    <div class="card-header border-primary">
                     Sub total: {{ number_format($debt->total, 2, '.', ',') }}
                     </div>
                     <div class="card-body">                        
@@ -105,7 +105,7 @@
                             </button>
                         </div>
                     </div>
-                    <div class="card-footer text-muted text-center">
+                    <div class="card-footer text-muted text-center border-primary">
                         Ingresado por: {{ $debt->user->name }} <br /> <small>{{ $debt->created_at->format('d-m-Y h:i A') }}</small>
                     </div>
                 </div> 

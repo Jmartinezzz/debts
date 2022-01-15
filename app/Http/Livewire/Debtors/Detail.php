@@ -22,8 +22,10 @@ class Detail extends Component
         'description' => 'nullable',
     ];
 
+
     public function render()
     {
+
         $debts = Debt::where('debtor_id', $this->debtor->id)->with('user:id,name')->get();
         return view('livewire.debtors.detail', ['debts' => $debts]);
     }

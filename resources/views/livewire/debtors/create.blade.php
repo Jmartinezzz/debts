@@ -6,6 +6,6 @@
     </div>
     <div class="form-group">
         <label for="description">Descripción:</label>
-        <textarea id="description" class="form-control"  id=""  rows="4" wire:model.defer="description" placeholder="Puede ingresar una descripción"></textarea>
+        <textarea id="description" class="form-control"  rows="4" wire:model.defer="description" placeholder="Puede ingresar una descripción"></textarea>
     </div>
 </div>
