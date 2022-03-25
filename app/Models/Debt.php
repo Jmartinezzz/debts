@@ -13,6 +13,7 @@ class Debt extends Model
         'debtor_id',
         'user_id',
         'total',
+        'type',
         'description',        
     ];
     

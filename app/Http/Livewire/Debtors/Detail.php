@@ -9,7 +9,7 @@ use Livewire\Component;
 
 class Detail extends Component
 {
-    public $debtor, $totalDebt = 0.0, $debt_id, $total, $description;
+    public $debtor, $totalDebt = 0.0, $debt_id, $total, $description, $type;
 
     protected $listeners = [
         'confirmedToDelete',
@@ -36,6 +36,7 @@ class Detail extends Component
             'debtor_id' => $this->debtor->id,
             'user_id' => auth()->user()->id,
             'total' => $this->total,
+            'type' => $this->type,
             'description' => $this->description,
         ]);
         $this->resetFields();    
@@ -132,5 +133,9 @@ class Detail extends Component
             'onConfirmed' => 'confirmedToReset',
             'onCancelled' => 'cancelled'
         ]);
+    }
+
+    public function setType($value) {
+        $this->type = $value;
     }
 }

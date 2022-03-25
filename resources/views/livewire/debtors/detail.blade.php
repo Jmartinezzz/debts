@@ -3,13 +3,14 @@
     <section class="row">
         <div class="col-md-6">
             <a href="{{ route('home') }}" class="btn btn-danger">Atrás</a>
-            <button class="btn btn-primary d-block d-md-inline mt-2 mt-md-0" data-toggle="modal" data-target="#modalDebts">Agregar nueva</button>
+            <button class="btn btn-primary d-block d-md-inline mt-2 mt-md-0" wire:click="setType('charge')" data-toggle="modal" data-target="#modalDebts">Agregar nueva</button>
+            <button class="btn btn-info d-block d-md-inline mt-2 mt-md-0" wire:click="setType('payment')" data-toggle="modal" data-target="#modalDebts">Agregar abono</button>
             <!-- Modal -->
             <div wire:ignore.self class="modal fade" id="modalDebts" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
               <div class="modal-dialog" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Nuevo registro de deuda</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">{{$type == 'charge' ? 'Nuevo registro de deuda' : 'Nuevo abono'}}</h5>
                     <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
                     </button>
                   </div>
@@ -84,12 +85,20 @@
         <div class="row">
         @forelse($debts as $debt)  
             @php
-                $totalDebt += $debt->total;
+                $totalDebt += $debt->type == 'charge' ? $debt->total : 0;
+                $totalDebt -= $debt->type == 'payment' ? $debt->total : 0;                
             @endphp  
             <div class="col-12 mt-4">               
-                <div class="card border-primary rounded">
-                    <div class="card-header border-primary">
-                    Sub total: {{ number_format($debt->total, 2, '.', ',') }}
+                <div @class(['card', 'rounded', 'border-success' => $debt->type == 'payment', 'border-primary' => $debt->type == 'charge'])>
+                    <div @class(['card-header d-flex justify-content-between', 'border-success' => $debt->type == 'payment', 'border-primary' => $debt->type == 'charge']) >
+                        <div>
+                            Sub total: {{ number_format($debt->total, 2, '.', ',') }}
+                        </div>
+                       @if($debt->type == 'payment')
+                         <div>
+                            <span class="badge rounded-pill bg-success">Abono</span>
+                        </div>
+                       @endif
                     </div>
                     <div class="card-body">                        
                         <p class="card-text">{{ $debt->description }}</p>
@@ -105,7 +114,7 @@
                             </button>
                         </div>
                     </div>
-                    <div class="card-footer text-muted text-center border-primary">
+                    <div @class(['card-footer', 'text-muted', 'text-center', 'border-success' => $debt->type == 'payment', 'border-primary' => $debt->type == 'charge'])>
                         Ingresado por: {{ $debt->user->name }} <br /> <small>{{ $debt->created_at->format('d-m-Y h:i A') }}</small>
                     </div>
                 </div> 
