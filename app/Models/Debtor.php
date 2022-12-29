@@ -16,7 +16,15 @@ class Debtor extends Model
     ];
 
     public function total(){
-        $totalDebt = Debt::where('debtor_id', $this->id)->sum('total');
+        $charges = Debt::where('debtor_id', $this->id)
+            ->where('type', 'charge')
+            ->sum('total');
+
+        $payments = Debt::where('debtor_id', $this->id)
+            ->where('type', 'payment')
+            ->sum('total');
+
+        $totalDebt = $charges - $payments;
 
         return number_format($totalDebt, 2, '.', ',');
     }
