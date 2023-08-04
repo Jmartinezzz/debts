@@ -1,5 +1,8 @@
 <div>
-    <h1 class="font-weight-bold">Deuda de  <p class="text-danger d-inline">{{ $debtor->name }}</p></h1>
+    <h1 class="font-weight-bold">
+        Deuda de  
+        <p class="text-danger d-inline">{{ $debtor->name }} (${{ $this->totality }})</p>
+    </h1>
     <section class="row">
         <div class="col-md-6">
             <a href="{{ route('home') }}" class="btn btn-danger">Atrás</a>
@@ -26,7 +29,7 @@
             </div>
             <!-- Modal -->
             @if($debts->count() > 0)
-                <button class="btn btn-primary d-block d-md-inline mt-2 mt-md-0" wire:click="wantoReset">Reestablecer a $0.0</button>
+                <button class="btn btn-primary d-block d-md-inline mt-2" wire:click="wantoReset">Reestablecer a $0.0</button>
             @endif
         </div>     
     </section>
@@ -74,7 +77,7 @@
                 @if($debts->count() > 0)
                     <tfoot>
                         <tr>
-                            <th colspan="6">Deuda total: &nbsp; ${{ number_format($totalDebt, 2, '.', ',') }}</th>                
+                            <th colspan="6">Deuda total: &nbsp; ${{ $this->totality }}</th>
                         </tr>
                     </tfoot>
                 @endif                 
@@ -84,10 +87,6 @@
         <section>
         <div class="row">
         @forelse($debts as $debt)  
-            @php
-                $totalDebt += $debt->type == 'charge' ? $debt->total : 0;
-                $totalDebt -= $debt->type == 'payment' ? $debt->total : 0;                
-            @endphp  
             <div class="col-12 mt-4">               
                 <div @class(['card', 'rounded', 'border-success' => $debt->type == 'payment', 'border-primary' => $debt->type == 'charge'])>
                     <div @class(['card-header d-flex justify-content-between', 'border-success' => $debt->type == 'payment', 'border-primary' => $debt->type == 'charge']) >
@@ -126,7 +125,7 @@
             </p>
          @endforelse()
          @if($debts->count() > 0)
-            <h5 class="text-center mt-3">Deuda total: &nbsp; ${{ number_format($totalDebt, 2, '.', ',') }}</h5>
+            <h5 class="text-center mt-3">Deuda total: &nbsp; ${{ $this->totality }}</h5>
         @endif
          
      </div>  

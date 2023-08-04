@@ -25,9 +25,25 @@ class Detail extends Component
 
     public function render()
     {
-
         $debts = Debt::where('debtor_id', $this->debtor->id)->with('user:id,name')->get();
         return view('livewire.debtors.detail', ['debts' => $debts]);
+    }
+
+    // Computed Property
+    public function getTotalityProperty()
+    {
+        $charges = Debt::where([
+                'debtor_id' => $this->debtor->id,
+                'type' => 'charge'
+            ])->sum('total');
+
+        $payments = Debt::where([
+                'debtor_id' => $this->debtor->id,
+                'type' => 'payment'
+            ])->sum('total');
+
+        $totalDebtCalc = $charges - $payments;
+        return number_format($totalDebtCalc, 2, '.', ',');
     }
 
     public function save(){
