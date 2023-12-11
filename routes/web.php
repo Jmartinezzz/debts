@@ -17,7 +17,7 @@ Route::get('/debtor-detail/{debtor}', function () {
     return view('debts');
 });
 
-Auth::routes();
+Auth::routes(['register' => false]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/debtor-detail/{debtor}', [App\Http\Controllers\HomeController::class, 'detail'])->name('debts.detail');
