@@ -2,7 +2,8 @@
 <html lang="es" >
 <head>
   <meta charset="UTF-8">
-  <title>Cheyo House - El retorno del bolo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cheyo House - El regreso del bolo</title>
   <link href="{{ asset('css/envelope.css') }}" rel="stylesheet">
 
 </head>
