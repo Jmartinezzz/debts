@@ -23,3 +23,4 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/debtor-detail/{debtor}', [App\Http\Controllers\HomeController::class, 'detail'])->name('debts.detail');
 
 Route::get('/porcentaje-descuento', [App\Http\Controllers\HomeController::class, 'dicountPercent'])->name('discount.percent');
+Route::get('/cheyo-house-invitacion', [App\Http\Controllers\HomeController::class, 'envelope'])->name('envelope');
