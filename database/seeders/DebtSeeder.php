@@ -14,6 +14,6 @@ class DebtSeeder extends Seeder
      */
     public function run()
     {
-        Debt::factory(10)->create();            
+        Debt::factory(10)->create();
     }
 }

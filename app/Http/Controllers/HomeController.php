@@ -14,7 +14,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['dicountPercent', 'envelope']]);
+        $this->middleware('auth', ['except' => ['dicountPercent']]);
     }
 
     /**
@@ -35,10 +35,5 @@ class HomeController extends Controller
     public function dicountPercent()
     {
         return view('discount-percent');
-    }
-    
-    public function envelope()
-    {
-        return view('envelope');
     }
 }

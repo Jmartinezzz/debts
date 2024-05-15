@@ -1,0 +1,90 @@
+version: '3'
+
+services:
+  web:
+    image: debtss
+    build:
+      target: web
+      context: .
+    env_file:
+      - .env
+    ports:
+      - "9000:80"
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      - db
+  
+  db:
+    platform: "linux/amd64"
+    image: mysql:5.7
+    env_file:
+      - .env
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "3307:3306"
+    volumes:
+      - dbdata:/var/lib/mysql
+  
+  phpmyadmin:
+    image: phpmyadmin:latest
+    ports:
+      - 9015:80
+    environment:
+      - PMA_ARBITRARY=1
+
+volumes:
+  dbdata:
+
+# services:
+#   laravel-docker:
+#     container_name: mine-docker
+#     build: .
+#     volumes:
+#       - ./laravel-app:/var/www/html
+#     ports:
+#       - 9005:80
+    
+#   mysql:
+#     image: mysql:5.7
+#     environment:
+#       MYSQL_ROOT_PASSWORD: root
+#       MYSQL_USER: admn
+#       MYSQL_PASSWORD: password
+#       MYSQL_DATABASE: debts
+#     ports:
+#       - 3305:3306
+    
+#   phpmyadmin:
+#     image: phpmyadmin:latest
+#     ports:
+#       - 9015:80
+#     environment:
+#       - PMA_ARBITRARY=1
+
+
+# services:
+#   app:
+#     build:
+#       context: .
+#       dockerfile: Dockerfile
+#     volumes:
+#       - .:/var/www/html
+#     ports:
+#       - "9000:9000"
+#     depends_on:
+#       - db
+
+#   db:
+#     image: mysql:5.7
+#     environment:
+#       MYSQL_DATABASE: debts
+#       MYSQL_USER: admin
+#       MYSQL_PASSWORD: 12345678
+#       MYSQL_ROOT_PASSWORD: 123456789
+#     ports:
+#       - "3307:3306"
