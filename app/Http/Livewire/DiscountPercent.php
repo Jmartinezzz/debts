@@ -15,8 +15,8 @@ class DiscountPercent extends Component
 
     public function calculateDiscount()
     {     
-        $this->valuePercent = $this->amount * ($this->percent / 100);
-        $this->total = $this->amount - $this->valuePercent;
+        $this->valuePercent = number_format($this->amount * ($this->percent / 100), 2);
+        $this->total = number_format($this->amount - $this->valuePercent, 2);
         $this->hide = false;
     }
 
