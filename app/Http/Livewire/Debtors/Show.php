@@ -23,8 +23,10 @@ class Show extends Component
     public function render()
     {
         // $this->dispatchBrowserEvent('closeModal');
-        $debtors = Debtor::where('name', 'LIKE', '%'.$this->search.'%')
-            ->orderBy('created_at', 'DESC')->get();
+        $debtors = Debtor::where('name', 'LIKE', '%'.$this->search.'%')->get();
+        $debtors = $debtors->sortByDesc(function($debtor){
+            return $debtor->total();
+        });
         return view('livewire.debtors.show', [
             'debtors' => $debtors
         ]);

@@ -11,19 +11,22 @@ class Debtor extends Model
     use HasFactory;
 
     protected $fillable = [
-     'name',
-     'description',        
+        'name',
+        'description',
     ];
 
-    public function total(){
-        $charges = Debt::where('debtor_id', $this->id)
-            ->where('type', 'charge')
-            ->sum('total');
+    public function total()
+    {
+        $totals = Debt::where('debtor_id', $this->id)
+            ->selectRaw('
+                SUM(CASE WHEN type = "charge" THEN total ELSE 0 END) as charges,
+                SUM(CASE WHEN type = "payment" THEN total ELSE 0 END) as payments
+            ')
+            ->first();
 
-        $payments = Debt::where('debtor_id', $this->id)
-            ->where('type', 'payment')
-            ->sum('total');
-
+        $charges = $totals->charges;
+        $payments = $totals->payments;
+       
         $totalDebt = $charges - $payments;
 
         return number_format($totalDebt, 2, '.', ',');

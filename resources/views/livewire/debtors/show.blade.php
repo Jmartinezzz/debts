@@ -76,8 +76,7 @@
             @include("livewire.partials.debtorModal")       
         </table>
    </div>
-@endif
-@if(isMobile())
+@else
    <section>
      <div class="row">
          @forelse($debtors as $debtor)    
