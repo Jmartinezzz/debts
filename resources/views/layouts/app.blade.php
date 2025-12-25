@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0">
@@ -25,10 +26,12 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
 
     @livewireStyles
 </head>
+
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
@@ -36,7 +39,9 @@
                 <a class="navbar-brand" href="{{ route('home') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
@@ -55,22 +60,21 @@
                                     <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                                 </li>
                             @endif
-
                         @else
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('discount.percent') }}">Calculo de descuento</a>
+                            </li>
                             <li class="nav-item dropdown">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('discount.percent') }}">Calculo de descuento</a>
-                                </li>
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
                                 </a>
-
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+                                    <a href="#" class="dropdown-item"
+                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                         Salir
                                     </a>
+
                                     <a class="dropdown-item" href="{{ route('logout') }}">
                                         Configuración
                                     </a>
@@ -80,42 +84,67 @@
                                     </form>
                                 </div>
                             </li>
+                            <li class="nav-item dropdown">
+
+                                <a id="workspaceDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    Espacio de trabajo
+                                </a>
+
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="workspaceDropdown">
+                                    @foreach ($workspaces as $workspace)
+                                        <a class="dropdown-item mt-2" href="#"
+                                            onclick="event.preventDefault();
+                                            document.getElementById('change-workspaces-form-{{ $workspace->id }}').submit();">
+                                            {{ $workspace->name }}
+                                            @if ($workspace->id == auth()->user()->active_workspace)
+                                                <small>✔️</small>
+                                            @endif
+                                        </a>
+
+                                        @unless ($workspace->id == auth()->user()->active_workspace)
+                                            <form id="{{ "change-workspaces-form-$workspace->id" }}"
+                                                action="{{ route('workspace.change') }}" method="POST" class="d-none">
+                                                @csrf
+                                                <input type="hidden" name="workspace_id" value="{{ $workspace->id }}">
+                                            </form>
+                                        @endunless
+                                    @endforeach
+                                </div>
+                            </li>
                         @endguest
                     </ul>
                 </div>
             </div>
         </nav>
 
-        <main class="py-4">           
+        <main class="py-4">
             @yield('content')
-           
+
         </main>
     </div>
-    @livewireScripts    
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10">
-    </script>
+    @livewireScripts
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <x-livewire-alert::scripts />
-     <script type="text/javascript">    
-
+    <script type="text/javascript">
         window.livewire.on('debtStore', (data) => {
-            if(data.type == 'save'){
-                $('#modalDebtors').modal('hide');  
-                
-            }else if(data.type == 'update'){
-                $('#modalDebtorsEdit').modal('hide');                       
-            }    
+            if (data.type == 'save') {
+                $('#modalDebtors').modal('hide');
+
+            } else if (data.type == 'update') {
+                $('#modalDebtorsEdit').modal('hide');
+            }
         });
 
         livewire.on('debtsStore', (data) => {
-            if(data.type == 'save'){
-                $('#modalDebts').modal('hide');  
-                
-            }else if(data.type == 'update'){
-                $('#modalDebtsEdit').modal('hide');                       
-            }    
+            if (data.type == 'save') {
+                $('#modalDebts').modal('hide');
+
+            } else if (data.type == 'update') {
+                $('#modalDebtsEdit').modal('hide');
+            }
         });
-
-
     </script>
 </body>
+
 </html>

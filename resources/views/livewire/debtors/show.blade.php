@@ -88,7 +88,7 @@
                      </div>
                    <div class="card-body">                        
                      <h6 class="card-subtitle mb-2 text-muted">{{ $debtor->description }}</h6>
-                     <p class="card-text">Total: {{ $debtor->total() }}</p>
+                     <p class="card-text h4">Total: {{ $debtor->total() }}</p>
                      <section class="d-flex justify-content-end">                            
                          <p class="text-secondary">Fecha de creación: {{ $debtor->created_at->format('d-m-Y') }}</p>
                      </section>
