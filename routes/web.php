@@ -25,5 +25,6 @@ Auth::routes(['register' => false]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/debtor-detail/{debtor}', [App\Http\Controllers\HomeController::class, 'detail'])->name('debts.detail');
+Route::post('/workspace-change', [App\Http\Controllers\WorkspaceController::class, 'change'])->name('workspace.change');
 
 Route::get('/porcentaje-descuento', [App\Http\Controllers\HomeController::class, 'dicountPercent'])->name('discount.percent');

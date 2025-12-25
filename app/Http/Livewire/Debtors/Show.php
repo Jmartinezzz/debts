@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Livewire\Debtors;
+
 use App\Models\Debtor;
 
 use Livewire\Component;
@@ -23,8 +24,10 @@ class Show extends Component
     public function render()
     {
         // $this->dispatchBrowserEvent('closeModal');
-        $debtors = Debtor::where('name', 'LIKE', '%'.$this->search.'%')->get();
-        $debtors = $debtors->sortByDesc(function($debtor){
+        $debtors = Debtor::where('name', 'LIKE', '%' . $this->search . '%')
+            ->where('workspace_id', auth()->user()->active_workspace)
+            ->get();
+        $debtors = $debtors->sortByDesc(function ($debtor) {
             return $debtor->total();
         });
         return view('livewire.debtors.show', [
@@ -32,74 +35,80 @@ class Show extends Component
         ]);
     }
 
-    public function store(){
+    public function store()
+    {
         $this->validate();
-     
+
         Debtor::create([
             'name' => $this->name,
-            'description' => $this->description
+            'description' => $this->description,
+            'workspace_id' => auth()->user()->active_workspace
         ]);
         $this->resetFields();
-        $this->emit('debtStore', ['type' => 'save']);  
+        $this->emit('debtStore', ['type' => 'save']);
         $this->alert(
             'success',
             'Registro Guardado',
             [
-                'position' =>  'center',  
+                'position' =>  'center',
             ]
         );
-          
     }
 
-    public function confirmedToDelete(){
+    public function confirmedToDelete()
+    {
         Debtor::find($this->debtor_id)->delete();
         $this->alert(
             'success',
             "Se elimino a $this->name",
-             [
-                'position' =>  'center',  
+            [
+                'position' =>  'center',
             ]
         );
-        $this->resetFields();     
+        $this->resetFields();
     }
 
-    public function cancelled(){        
+    public function cancelled()
+    {
         $this->alert('info', 'No se elimino nada', [
-                'position' =>  'center',  
-            ]);
+            'position' =>  'center',
+        ]);
     }
 
-    public function edit(Debtor $debtor){
+    public function edit(Debtor $debtor)
+    {
         $this->name = $debtor->name;
         $this->description = $debtor->description;
         $this->debtor_id = $debtor->id;
-        
-    }  
+    }
 
 
-    public function update(Debtor $debtor){
+    public function update(Debtor $debtor)
+    {
         $this->validate();
         $debtor->update([
             'name' => $this->name,
             'description' => $this->description
         ]);
 
-        $this->resetFields();        
-        $this->emit('debtStore', ['type' => 'update']);  
+        $this->resetFields();
+        $this->emit('debtStore', ['type' => 'update']);
         $this->alert(
             'success',
             'Registro Actualizado',
-             [
-                'position' =>  'center',  
+            [
+                'position' =>  'center',
             ]
         );
-    }       
+    }
 
-    public function resetFields(){
+    public function resetFields()
+    {
         $this->reset(['debtor_id', 'name', 'description']);
-    } 
+    }
 
-    public function wantoDelete(Debtor $debtor){
+    public function wantoDelete(Debtor $debtor)
+    {
         $this->debtor_id = $debtor->id;
         $this->name = $debtor->name;
         $this->confirm("¿Seguro de eliminar a $debtor->name?", [

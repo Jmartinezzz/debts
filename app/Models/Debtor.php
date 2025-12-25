@@ -13,6 +13,7 @@ class Debtor extends Model
     protected $fillable = [
         'name',
         'description',
+        'workspace_id',
     ];
 
     public function total()
