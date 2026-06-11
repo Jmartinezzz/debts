@@ -27,7 +27,6 @@
      <div class="col-12 col-md-6 mt-3 mt-md-0">
          <div class="d-flex justify-content-end">
              <input wire:model="search" placeholder="Ingrese el nombre a buscar" class="form-control" type="search">
-             {{-- <button wire:click="$refresh" class="btn btn-secondary">Buscar</button>   --}}
          </div>
      </div>        
  </section>

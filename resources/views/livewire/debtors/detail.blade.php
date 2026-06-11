@@ -28,7 +28,7 @@
               </div>
             </div>
             <!-- Modal -->
-            @if($debts->count() > 0)
+            @if($debts->isNotEmpty())
                 <button class="btn btn-primary d-block d-md-inline mt-2" wire:click="wantoReset">Reestablecer a $0.0</button>
             @endif
         </div>     
@@ -74,7 +74,7 @@
                         </tr>
                     @endforelse()
                 </tbody>
-                @if($debts->count() > 0)
+                @if($debts->isNotEmpty())
                     <tfoot>
                         <tr>
                             <th colspan="6">Deuda total: &nbsp; ${{ $this->totality }}</th>
@@ -88,7 +88,7 @@
         <div class="row">
         @forelse($debts as $debt)  
             <div class="col-12 mt-4">               
-                <div @class(['card', 'rounded', 'border-success' => $debt->type == 'payment', 'border-primary' => $debt->type == 'charge'])>
+                <div @class(['card', 'shadow', 'rounded', 'border-success' => $debt->type == 'payment', 'border-primary' => $debt->type == 'charge'])>
                     <div @class(['card-header d-flex justify-content-between', 'border-success' => $debt->type == 'payment', 'border-primary' => $debt->type == 'charge']) >
                         <div>
                             Sub total: {{ number_format($debt->total, 2, '.', ',') }}
@@ -124,8 +124,8 @@
                 No hay registros aún
             </p>
          @endforelse()
-         @if($debts->count() > 0)
-            <h5 class="text-center mt-3">Deuda total: &nbsp; ${{ $this->totality }}</h5>
+         @if($debts->isNotEmpty())
+            <h5 class="text-center mt-4">Deuda total: &nbsp; ${{ $this->totality }}</h5>
         @endif
          
      </div>  

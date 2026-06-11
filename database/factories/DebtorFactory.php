@@ -24,6 +24,7 @@ class DebtorFactory extends Factory
         return [
             'name' => $this->faker->word,
             'description' => $this->faker->sentence($nbWords = 6, $variableNbWords = true),
+            'workspace_id' => 1
         ];
     }
 }
